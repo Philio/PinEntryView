@@ -36,8 +36,7 @@ Add the following to your `build.gradle`:
 * accentColor - The colour of the accent to use to highlight the view when it's in focus, defaults
   to `android:colorAccent` from the current theme.
 * accentWidth - The width of the accent highlight, default 3dp.
-* accentType - Defines the behaviour of the accent:
+* accentType - Defines the behaviour of the accent, default none, options:
   * none - disabled
   * all - highlights each separate digit view
-  * character - highlights a single digit view to represent the position of the cursor  
-Default none.
+  * character - highlights a single digit view to represent the position of the cursor

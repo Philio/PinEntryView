@@ -37,7 +37,7 @@ Add the following to your `build.gradle`:
   to `android:colorAccent` from the current theme.
 * accentWidth - The width of the accent highlight, default 3dp.
 * accentType - Defines the behaviour of the accent:
-  * none - Disabled
+  * none - disabled
   * all - highlights each separate digit view
   * character - highlights a single digit view to represent the position of the cursor
-  defaults to none.
+Default none.

@@ -173,7 +173,7 @@ public class PinEntryView extends ViewGroup {
                     mDigitWidth, getPaddingTop() + mDigitHeight);
         }
 
-        // Add the edit text as a 1x1 view to allow it to focus
+        // Add the edit text as a 1px wide view to allow it to focus
         getChildAt(mDigits).layout(getPaddingLeft(), getPaddingTop(), 1, mDigitHeight);
     }
 

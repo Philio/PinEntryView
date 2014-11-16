@@ -236,6 +236,15 @@ public class PinEntryView extends ViewGroup {
         mEditText.removeTextChangedListener(watcher);
     }
 
+    /**
+     * Get the {@link Editable} from the EditText
+     *
+     * @return
+     */
+    public Editable getText() {
+        return mEditText.getText();
+    }
+
    /**
      * Create views and add them to the view group
      */
@@ -267,7 +276,8 @@ public class PinEntryView extends ViewGroup {
                 int length = mEditText.getText().length();
                 for (int i = 0; i < mDigits; i++) {
                     getChildAt(i).setSelected(hasFocus && (mAccentType == ACCENT_ALL ||
-                            (mAccentType == ACCENT_CHARACTER && i == length)));
+                            (mAccentType == ACCENT_CHARACTER && (i == length ||
+                                    (i == mDigits - 1 && length == mDigits)))));
                 }
 
                 // Provide focus change events to any listener
@@ -298,7 +308,8 @@ public class PinEntryView extends ViewGroup {
                     }
                     if (mEditText.hasFocus()) {
                         getChildAt(i).setSelected(mAccentType == ACCENT_ALL ||
-                                (mAccentType == ACCENT_CHARACTER && i == length));
+                                (mAccentType == ACCENT_CHARACTER && (i == length ||
+                                        (i == mDigits - 1  && length == mDigits))));
                     }
                 }
             }

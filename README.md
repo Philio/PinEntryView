@@ -21,22 +21,22 @@ Add the following to your `build.gradle`:
 
 ### Attributes
 
-* numDigits - The number of digits in the PIN, default 4.
-* digitWidth - The width of the digit view, default 50dp.
-* digitHeight - The heigh of the digit view, default 50dp.
-* digitSpacing - The distance between the digit views, default 20dp.
-* digitBackground - A resource to use for the digit views, supports drawables or colours and can
+* `numDigits` - The number of digits in the PIN, default 4.
+* `digitWidth` - The width of the digit view, default 50dp.
+* `digitHeight` - The heigh of the digit view, default 50dp.
+* `digitSpacing` - The distance between the digit views, default 20dp.
+* `digitBackground` - A resource to use for the digit views, supports drawables or colours and can
   be used with a custom selector as an alternative to using the built in accent support (by setting
   the `accentColor` as transparent). Defaults to `android:windowBackground` from the current theme.
-* digitTextSize - The size of the text in the digit view, default 15sp.
-* digitTextColor - The colour of the text in the digit view, defaults to `android:textColorPrimary`
+* `digitTextSize` - The size of the text in the digit view, default 15sp.
+* `digitTextColor` - The colour of the text in the digit view, defaults to `android:textColorPrimary`
   from the current theme.
-* mask - A character to use as a mask for the entered PIN value, can be set to an empty string to
+* `mask` - A character to use as a mask for the entered PIN value, can be set to an empty string to
   show typed numbers, default *.
-* accentColor - The colour of the accent to use to highlight the view when it's in focus, defaults
+* `accentColor` - The colour of the accent to use to highlight the view when it's in focus, defaults
   to `android:colorAccent` from the current theme.
-* accentWidth - The width of the accent highlight, default 3dp.
-* accentType - Defines the behaviour of the accent, default none, options:
-  * none - disabled
-  * all - highlights each separate digit view
-  * character - highlights a single digit view to represent the position of the cursor
+* `accentWidth` - The width of the accent highlight, default 3dp.
+* `accentType` - Defines the behaviour of the accent, default none, options:
+  * `none` - disabled
+  * `all` - highlights each separate digit view
+  * `character` - highlights a single digit view to represent the position of the cursor

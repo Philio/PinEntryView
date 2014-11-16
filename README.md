@@ -39,5 +39,5 @@ Add the following to your `build.gradle`:
 * accentType - Defines the behaviour of the accent:
   * none - disabled
   * all - highlights each separate digit view
-  * character - highlights a single digit view to represent the position of the cursor
+  * character - highlights a single digit view to represent the position of the cursor  
 Default none.

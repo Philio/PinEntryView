@@ -15,7 +15,7 @@ screen and supports similar features.
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.0'
+    compile 'me.philio:pinentryview:1.0.1'
 
 ## Styling
 

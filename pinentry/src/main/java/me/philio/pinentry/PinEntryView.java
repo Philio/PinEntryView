@@ -29,7 +29,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -219,13 +218,13 @@ public class PinEntryView extends ViewGroup {
     }
 
     @Override
-    public void setOnFocusChangeListener(OnFocusChangeListener l) {
-        mOnFocusChangeListener = l;
+    public OnFocusChangeListener getOnFocusChangeListener() {
+        return mOnFocusChangeListener;
     }
 
     @Override
-    public OnFocusChangeListener getOnFocusChangeListener() {
-        return mOnFocusChangeListener;
+    public void setOnFocusChangeListener(OnFocusChangeListener l) {
+        mOnFocusChangeListener = l;
     }
 
     /**
@@ -255,7 +254,7 @@ public class PinEntryView extends ViewGroup {
         return mEditText.getText();
     }
 
-   /**
+    /**
      * Create views and add them to the view group
      */
     private void addViews() {
@@ -325,12 +324,48 @@ public class PinEntryView extends ViewGroup {
                     if (mEditText.hasFocus()) {
                         getChildAt(i).setSelected(mAccentType == ACCENT_ALL ||
                                 (mAccentType == ACCENT_CHARACTER && (i == length ||
-                                        (i == mDigits - 1  && length == mDigits))));
+                                        (i == mDigits - 1 && length == mDigits))));
                     }
                 }
             }
         });
         addView(mEditText);
+    }
+
+    /**
+     * Save state of the view
+     */
+    static class SavedState extends BaseSavedState {
+
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    @Override
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    @Override
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+        String editTextValue;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel source) {
+            super(source);
+            editTextValue = source.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeString(editTextValue);
+        }
+
     }
 
     /**
@@ -369,43 +404,6 @@ public class PinEntryView extends ViewGroup {
                 canvas.drawRect(0, getHeight() - mAccentWidth, getWidth(), getHeight(), mPaint);
             }
         }
-
-    }
-
-    /**
-     * Save state of the view
-     */
-    static class SavedState extends BaseSavedState {
-
-        String editTextValue;
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        private SavedState(Parcel source) {
-            super(source);
-            editTextValue = source.readString();
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeString(editTextValue);
-        }
-
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
 
     }
 

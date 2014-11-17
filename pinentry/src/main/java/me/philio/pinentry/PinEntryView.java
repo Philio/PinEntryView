@@ -184,8 +184,7 @@ public class PinEntryView extends ViewGroup {
         }
 
         // Add the edit text as a 1px wide view to allow it to focus
-        getChildAt(mDigits).layout(getPaddingLeft(), getPaddingTop(), 1, mDigitHeight +
-                (mDigitElevation * 2));
+        getChildAt(mDigits).layout(0, 0, 1, getMeasuredHeight());
     }
 
     @Override
@@ -293,6 +292,9 @@ public class PinEntryView extends ViewGroup {
                             (mAccentType == ACCENT_CHARACTER && (i == length ||
                                     (i == mDigits - 1 && length == mDigits)))));
                 }
+
+                // Make sure the cursor is at the end
+                mEditText.setSelection(length);
 
                 // Provide focus change events to any listener
                 if (mOnFocusChangeListener != null) {

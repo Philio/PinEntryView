@@ -9,13 +9,19 @@ support library.
 Uses a hidden `EditText` to handle input, hence behaves much in the same was as an `EditText` on the
 screen and supports similar features.
 
+## Recent Changes
+
+* 1.0.2 - Add support for elevation on the digits in Lollipop
+* 1.0.1 - Minor fixes
+* 1.0.0 - Initial release
+
 ## Download
 
 ### Gradle
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.1'
+    compile 'me.philio:pinentryview:1.0.2'
 
 ## Styling
 
@@ -31,6 +37,7 @@ Add the following to your `build.gradle`:
 * `digitTextSize` - The size of the text in the digit view, default 15sp.
 * `digitTextColor` - The colour of the text in the digit view, defaults to `android:textColorPrimary`
   from the current theme.
+* `digitElevation` - Set the elevation of the digit views, API 21+ only, default 0dp.
 * `mask` - A character to use as a mask for the entered PIN value, can be set to an empty string to
   show typed numbers, default *.
 * `accentColor` - The colour of the accent to use to highlight the view when it's in focus, defaults

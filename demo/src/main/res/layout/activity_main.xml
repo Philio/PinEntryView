@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:accentType="all"
-            app:digitBackground="@android:color/white" />
+            app:digitBackground="@android:color/white"
+            app:digitElevation="10dp" />
 
         <me.philio.pinentry.PinEntryView
             android:id="@+id/pin_entry_border"

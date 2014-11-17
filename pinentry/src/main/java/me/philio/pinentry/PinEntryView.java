@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Editable;
@@ -40,7 +41,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * A simple pin entry widget
+ * A PIN entry view widget for Android based on the Android 5 Material Theme via the AppCompat v7
+ * support library.
  */
 public class PinEntryView extends ViewGroup {
 
@@ -65,6 +67,7 @@ public class PinEntryView extends ViewGroup {
     private int mDigitSpacing;
     private int mDigitTextSize;
     private int mDigitTextColor;
+    private int mDigitElevation;
 
     /**
      * Accent dimensions and styles
@@ -116,6 +119,9 @@ public class PinEntryView extends ViewGroup {
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15, metrics));
         mAccentWidth = array.getDimensionPixelSize(R.styleable.PinEntryView_accentWidth,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, metrics));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mDigitElevation = array.getDimensionPixelSize(R.styleable.PinEntryView_digitElevation, 0);
+        }
 
         // Get theme to resolve defaults
         Resources.Theme theme = getContext().getTheme();
@@ -159,8 +165,9 @@ public class PinEntryView extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Calculate the size of the view
         int width = (mDigitWidth * mDigits) + (mDigitSpacing * (mDigits - 1));
-        setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(), mDigitHeight +
-                getPaddingTop() + getPaddingBottom());
+        setMeasuredDimension(
+                width + getPaddingLeft() + getPaddingRight() + (mDigitElevation * 2),
+                mDigitHeight + getPaddingTop() + getPaddingBottom() + (mDigitElevation * 2));
     }
 
     @Override
@@ -169,12 +176,16 @@ public class PinEntryView extends ViewGroup {
         for (int i = 0; i < mDigits; i++) {
             View child = getChildAt(i);
             int left = i * mDigitWidth + (i > 0 ? i * mDigitSpacing : 0);
-            child.layout(left + getPaddingLeft(), getPaddingTop(), left + getPaddingLeft() +
-                    mDigitWidth, getPaddingTop() + mDigitHeight);
+            child.layout(
+                    left + getPaddingLeft() + mDigitElevation,
+                    getPaddingTop() + (mDigitElevation / 2),
+                    left + getPaddingLeft() + mDigitElevation + mDigitWidth,
+                    getPaddingTop() + (mDigitElevation / 2) + mDigitHeight);
         }
 
         // Add the edit text as a 1px wide view to allow it to focus
-        getChildAt(mDigits).layout(getPaddingLeft(), getPaddingTop(), 1, mDigitHeight);
+        getChildAt(mDigits).layout(getPaddingLeft(), getPaddingTop(), 1, mDigitHeight +
+                (mDigitElevation * 2));
     }
 
     @Override
@@ -258,6 +269,9 @@ public class PinEntryView extends ViewGroup {
             digitView.setTextColor(mDigitTextColor);
             digitView.setTextSize(mDigitTextSize);
             digitView.setGravity(Gravity.CENTER);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                digitView.setElevation(mDigitElevation);
+            }
             addView(digitView);
         }
 

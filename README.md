@@ -3,8 +3,8 @@ PinEntryView
 
 ## About
 
-A PIN entry view widget for Android based on the Android 5 Material Theme via the AppCompat v7
-support library.
+A PIN entry view widget for Android with support for Android 5 Material Theme features via the
+AppCompat v7 support library.
 
 Uses a hidden `EditText` to handle input, hence behaves much in the same was as an `EditText` on the
 screen and supports similar features.

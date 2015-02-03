@@ -15,6 +15,7 @@
  */
 package me.philio.pinentry;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -151,6 +152,9 @@ public class PinEntryView extends ViewGroup {
             mMask = maskCharacter;
         }
 
+        // Recycle the typed array
+        array.recycle();
+
         // Add child views
         addViews();
     }
@@ -262,6 +266,7 @@ public class PinEntryView extends ViewGroup {
     /**
      * Create views and add them to the view group
      */
+    @TargetApi(21)
     private void addViews() {
         // Add a digit view for each digit
         for (int i = 0; i < mDigits; i++) {

@@ -13,6 +13,7 @@ screen and supports similar features.
 
 ## Recent Changes
 
+* 1.0.3 - Fixed #2, gravity of digits now correctly displayed
 * 1.0.2 - Add support for elevation on the digits in Lollipop
 * 1.0.1 - Minor fixes
 * 1.0.0 - Initial release
@@ -23,7 +24,7 @@ screen and supports similar features.
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.2'
+    compile 'me.philio:pinentryview:1.0.3'
 
 ## Styling
 

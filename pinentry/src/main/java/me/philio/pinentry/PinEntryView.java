@@ -162,6 +162,11 @@ public class PinEntryView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // Measure children
+        for (int i = 0; i < getChildCount(); i ++) {
+            getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
+        }
+
         // Calculate the size of the view
         int width = (mDigitWidth * mDigits) + (mDigitSpacing * (mDigits - 1));
         setMeasuredDimension(

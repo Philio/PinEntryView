@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:accentColor="@color/holo_blue_dark"
+            app:pinAccentColor="@color/holo_blue_dark"
             app:accentType="all"
             app:digitBackground="@color/holo_red_light"
             app:digitTextColor="@color/holo_orange_light"/>

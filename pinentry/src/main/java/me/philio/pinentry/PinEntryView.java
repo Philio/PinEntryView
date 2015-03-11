@@ -142,7 +142,7 @@ public class PinEntryView extends ViewGroup {
         // Accent colour, default to android:colorAccent from theme
         TypedValue accentColor = new TypedValue();
         theme.resolveAttribute(R.attr.colorAccent, accentColor, true);
-        mAccentColor = array.getColor(R.styleable.PinEntryView_accentColor,
+        mAccentColor = array.getColor(R.styleable.PinEntryView_pinAccentColor,
                 accentColor.resourceId > 0 ? getResources().getColor(accentColor.resourceId) :
                         accentColor.data);
 

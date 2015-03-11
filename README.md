@@ -13,6 +13,8 @@ screen and supports similar features.
 
 ## Recent Changes
 
+* 1.0.4 - Changed attribute name `accentColor` to `pinAccentColor` to avoid conflicts with other
+libraries
 * 1.0.3 - Fixed #2, gravity of digits now correctly displayed
 * 1.0.2 - Add support for elevation on the digits in Lollipop
 * 1.0.1 - Minor fixes
@@ -24,7 +26,7 @@ screen and supports similar features.
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.3'
+    compile 'me.philio:pinentryview:1.0.4'
 
 ## Styling
 
@@ -43,7 +45,7 @@ Add the following to your `build.gradle`:
 * `digitElevation` - Set the elevation of the digit views, API 21+ only, default 0dp.
 * `mask` - A character to use as a mask for the entered PIN value, can be set to an empty string to
   show typed numbers, default *.
-* `accentColor` - The colour of the accent to use to highlight the view when it's in focus, defaults
+* `pinAccentColor` - The colour of the accent to use to highlight the view when it's in focus, defaults
   to `android:colorAccent` from the current theme.
 * `accentWidth` - The width of the accent highlight, default 3dp.
 * `accentType` - Defines the behaviour of the accent, default none, options:

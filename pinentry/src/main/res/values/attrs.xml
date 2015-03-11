@@ -19,7 +19,7 @@
         <!-- The character to use to mask the input -->
         <attr name="mask" format="string" />
         <!-- Accent color, defaults to theme colorAccent -->
-        <attr name="accentColor" format="color" />
+        <attr name="pinAccentColor" format="color" />
         <!-- Accent width, default 3dp -->
         <attr name="accentWidth" format="dimension" />
         <!-- Accent type, default 'character' -->

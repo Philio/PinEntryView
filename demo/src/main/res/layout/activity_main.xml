@@ -22,7 +22,7 @@
             android:layout_marginTop="20dp"
             app:accentType="all"
             app:digitBackground="@android:color/white"
-            app:digitElevation="10dp"/>
+            app:digitElevation="10dp" />
 
         <me.philio.pinentry.PinEntryView
             android:id="@+id/pin_entry_border"
@@ -32,16 +32,16 @@
             app:accentType="character"
             app:digitBackground="@drawable/background_border"
             app:digitTextSize="11sp"
-            app:mask=""/>
+            app:mask="" />
 
         <me.philio.pinentry.PinEntryView
             android:id="@+id/pin_entry_colors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:pinAccentColor="@color/holo_blue_dark"
             app:accentType="all"
             app:digitBackground="@color/holo_red_light"
-            app:digitTextColor="@color/holo_orange_light"/>
+            app:digitTextColor="@color/holo_orange_light"
+            app:pinAccentColor="@color/holo_blue_dark" />
     </LinearLayout>
 </ScrollView>

@@ -11,8 +11,9 @@ AppCompat v7 support library.
 Uses a hidden `EditText` to handle input, hence behaves much in the same was as an `EditText` on the
 screen and supports similar features.
 
-## Recent Changes
+## Change log
 
+* 1.0.5 - Added `setText` and `clearText` methods, updated build to API 22
 * 1.0.4 - Changed attribute name `accentColor` to `pinAccentColor` to avoid conflicts with other
 libraries
 * 1.0.3 - Fixed #2, gravity of digits now correctly displayed
@@ -26,7 +27,7 @@ libraries
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.4'
+    compile 'me.philio:pinentryview:1.0.5'
 
 ## Styling
 

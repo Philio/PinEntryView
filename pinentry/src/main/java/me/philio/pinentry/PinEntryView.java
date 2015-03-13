@@ -264,6 +264,25 @@ public class PinEntryView extends ViewGroup {
     }
 
     /**
+     * Set text to the EditText
+     *
+     * @param text
+     */
+    public void setText(CharSequence text) {
+        if (text.length() > mDigits) {
+            text = text.subSequence(0, mDigits);
+        }
+        mEditText.setText(text);
+    }
+
+    /**
+     * Clear pin input
+     */
+    public void clearText() {
+        mEditText.setText("");
+    }
+
+    /**
      * Create views and add them to the view group
      */
     @TargetApi(21)

@@ -92,6 +92,12 @@ public class PinEntryView extends ViewGroup {
     private OnFocusChangeListener mOnFocusChangeListener;
 
     /**
+     * If set to false, will always draw accent color if type is CHARACTER or ALL
+     * If set to true, will draw accent color only when focussed.
+     */
+    private boolean mAccentRequiresFocus;
+
+    /**
      * Pin entered listener used as a callback for when all digits have been entered
      */
     private PinEnteredListener mPinEnteredListener;
@@ -156,6 +162,8 @@ public class PinEntryView extends ViewGroup {
         if (maskCharacter != null) {
             mMask = maskCharacter;
         }
+
+        mAccentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
 
         // Recycle the typed array
         array.recycle();
@@ -446,7 +454,7 @@ public class PinEntryView extends ViewGroup {
             super.onDraw(canvas);
 
             // If selected draw the accent
-            if (isSelected()) {
+            if (isSelected() || !mAccentRequiresFocus) {
                 canvas.drawRect(0, getHeight() - mAccentWidth, getWidth(), getHeight(), mPaint);
             }
         }

@@ -91,6 +91,11 @@ public class PinEntryView extends ViewGroup {
      */
     private OnFocusChangeListener mOnFocusChangeListener;
 
+    /**
+     * Pin entered listener used as a callback for when all digits have been entered
+     */
+    private PinEnteredListener mPinEnteredListener;
+
     public PinEntryView(Context context) {
         this(context, null);
     }
@@ -167,7 +172,7 @@ public class PinEntryView extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Measure children
-        for (int i = 0; i < getChildCount(); i ++) {
+        for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
         }
 
@@ -282,6 +287,10 @@ public class PinEntryView extends ViewGroup {
         mEditText.setText("");
     }
 
+    public void setPinEnteredListener(PinEnteredListener mPinEnteredListener) {
+        this.mPinEnteredListener = mPinEnteredListener;
+    }
+
     /**
      * Create views and add them to the view group
      */
@@ -356,6 +365,10 @@ public class PinEntryView extends ViewGroup {
                                         (i == mDigits - 1 && length == mDigits))));
                     }
                 }
+
+                if (length == mDigits && mPinEnteredListener != null) {
+                    mPinEnteredListener.pinEntered(s.toString());
+                }
             }
         });
         addView(mEditText);
@@ -395,6 +408,10 @@ public class PinEntryView extends ViewGroup {
             dest.writeString(editTextValue);
         }
 
+    }
+
+    public interface PinEnteredListener {
+        void pinEntered(String pin);
     }
 
     /**

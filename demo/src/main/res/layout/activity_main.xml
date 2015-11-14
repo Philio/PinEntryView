@@ -32,7 +32,8 @@
             app:accentType="character"
             app:digitBackground="@drawable/background_border"
             app:digitTextSize="11sp"
-            app:mask="" />
+            app:mask=""
+            app:pinInputType="text" />
 
         <me.philio.pinentry.PinEntryView
             android:id="@+id/pin_entry_colors"
@@ -40,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:accentType="all"
-            app:digitBackground="@color/holo_red_light"
-            app:digitTextColor="@color/holo_orange_light"
-            app:pinAccentColor="@color/holo_blue_dark" />
+            app:digitBackground="@color/red"
+            app:digitTextColor="@android:color/white"
+            app:pinAccentColor="@color/amber" />
     </LinearLayout>
 </ScrollView>

@@ -11,6 +11,12 @@ AppCompat v7 support library.
 Uses a hidden `EditText` to handle input, hence behaves much in the same was as an `EditText` on the
 screen and supports similar features.
 
+## Demo
+
+The demo app running the latest release build is also available on the Play Store:
+
+<a href="https://play.google.com/store/apps/details?id=me.philio.pinentry.demo&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" /></a>
+
 ## Change log
 
 * 1.0.6 - Added `pinInputType` attribute to allow changing the input type, fixed #7

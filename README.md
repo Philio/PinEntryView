@@ -13,6 +13,7 @@ screen and supports similar features.
 
 ## Change log
 
+* 1.0.6 - Added `pinInputType` attribute to allow changing the input type, fixed #7
 * 1.0.5 - Added `setText` and `clearText` methods, updated build to API 22
 * 1.0.4 - Changed attribute name `accentColor` to `pinAccentColor` to avoid conflicts with other
 libraries
@@ -27,7 +28,7 @@ libraries
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.5'
+    compile 'me.philio:pinentryview:1.0.6'
 
 ## Styling
 
@@ -53,6 +54,9 @@ Add the following to your `build.gradle`:
   * `none` - disabled
   * `all` - highlights each separate digit view
   * `character` - highlights a single digit view to represent the position of the cursor
+* `pinInputType` - Set the input type, default number, options:
+  * `text` - full keyboard, any available character allowed
+  * `number` - numeric keyboard, only numbers allowed
 
 ## License
 

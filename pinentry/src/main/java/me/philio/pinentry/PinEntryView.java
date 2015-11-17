@@ -83,17 +83,17 @@ public class PinEntryView extends ViewGroup {
     /**
      * Character to use for each digit
      */
-    private String mMask = "*";
+    private String mask = "*";
 
     /**
      * Edit text to handle input
      */
-    private EditText mEditText;
+    private EditText editText;
 
     /**
      * Focus change listener to send focus events to
      */
-    private OnFocusChangeListener mOnFocusChangeListener;
+    private OnFocusChangeListener onFocusChangeListener;
 
     public PinEntryView(Context context) {
         this(context, null);
@@ -154,7 +154,7 @@ public class PinEntryView extends ViewGroup {
         // Mask character
         String maskCharacter = array.getString(R.styleable.PinEntryView_mask);
         if (maskCharacter != null) {
-            mMask = maskCharacter;
+            mask = maskCharacter;
         }
 
         // Recycle the typed array
@@ -171,16 +171,18 @@ public class PinEntryView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // Measure children
-        for (int i = 0; i < getChildCount(); i++) {
-            getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
-        }
-
         // Calculate the size of the view
         int width = (digitWidth * digits) + (digitSpacing * (digits - 1));
         setMeasuredDimension(
                 width + getPaddingLeft() + getPaddingRight() + (digitElevation * 2),
                 digitHeight + getPaddingTop() + getPaddingBottom() + (digitElevation * 2));
+
+        int height = MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY);
+
+        // Measure children
+        for (int i = 0; i < getChildCount(); i ++) {
+            getChildAt(i).measure(width, height);
+        }
     }
 
     @Override
@@ -204,12 +206,12 @@ public class PinEntryView extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             // Make sure this view is focused
-            mEditText.requestFocus();
+            editText.requestFocus();
 
             // Show keyboard
             InputMethodManager inputMethodManager = (InputMethodManager) getContext()
                     .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(mEditText, 0);
+            inputMethodManager.showSoftInput(editText, 0);
             return true;
         }
         return super.onTouchEvent(event);
@@ -219,7 +221,7 @@ public class PinEntryView extends ViewGroup {
     protected Parcelable onSaveInstanceState() {
         Parcelable parcelable = super.onSaveInstanceState();
         SavedState savedState = new SavedState(parcelable);
-        savedState.editTextValue = mEditText.getText().toString();
+        savedState.editTextValue = editText.getText().toString();
         return savedState;
     }
 
@@ -227,18 +229,18 @@ public class PinEntryView extends ViewGroup {
     protected void onRestoreInstanceState(Parcelable state) {
         SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
-        mEditText.setText(savedState.editTextValue);
-        mEditText.setSelection(savedState.editTextValue.length());
+        editText.setText(savedState.editTextValue);
+        editText.setSelection(savedState.editTextValue.length());
     }
 
     @Override
     public OnFocusChangeListener getOnFocusChangeListener() {
-        return mOnFocusChangeListener;
+        return onFocusChangeListener;
     }
 
     @Override
     public void setOnFocusChangeListener(OnFocusChangeListener l) {
-        mOnFocusChangeListener = l;
+        onFocusChangeListener = l;
     }
 
     /**
@@ -247,7 +249,7 @@ public class PinEntryView extends ViewGroup {
      * @param watcher
      */
     public void addTextChangedListener(TextWatcher watcher) {
-        mEditText.addTextChangedListener(watcher);
+        editText.addTextChangedListener(watcher);
     }
 
     /**
@@ -256,7 +258,7 @@ public class PinEntryView extends ViewGroup {
      * @param watcher
      */
     public void removeTextChangedListener(TextWatcher watcher) {
-        mEditText.removeTextChangedListener(watcher);
+        editText.removeTextChangedListener(watcher);
     }
 
     /**
@@ -265,7 +267,7 @@ public class PinEntryView extends ViewGroup {
      * @return
      */
     public Editable getText() {
-        return mEditText.getText();
+        return editText.getText();
     }
 
     /**
@@ -277,14 +279,14 @@ public class PinEntryView extends ViewGroup {
         if (text.length() > digits) {
             text = text.subSequence(0, digits);
         }
-        mEditText.setText(text);
+        editText.setText(text);
     }
 
     /**
      * Clear pin input
      */
     public void clearText() {
-        mEditText.setText("");
+        editText.setText("");
     }
 
     /**
@@ -293,7 +295,7 @@ public class PinEntryView extends ViewGroup {
     private void addViews() {
         // Add a digit view for each digit
         for (int i = 0; i < digits; i++) {
-            DigitView digitView = new DigitView(getContext());
+            DigitView digitView = new DigitView(getContext() );
             digitView.setWidth(digitWidth);
             digitView.setHeight(digitHeight);
             digitView.setBackgroundResource(digitBackground);
@@ -307,18 +309,18 @@ public class PinEntryView extends ViewGroup {
         }
 
         // Add an "invisible" edit text to handle input
-        mEditText = new EditText(getContext());
-        mEditText.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        mEditText.setTextColor(getResources().getColor(android.R.color.transparent));
-        mEditText.setCursorVisible(false);
-        mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(digits)});
-        mEditText.setInputType(inputType);
-        mEditText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-        mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+        editText = new EditText(getContext());
+        editText.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        editText.setTextColor(getResources().getColor(android.R.color.transparent));
+        editText.setCursorVisible(false);
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(digits)});
+        editText.setInputType(inputType);
+        editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 // Update the selected state of the views
-                int length = mEditText.getText().length();
+                int length = editText.getText().length();
                 for (int i = 0; i < digits; i++) {
                     getChildAt(i).setSelected(hasFocus && (accentType == ACCENT_ALL ||
                             (accentType == ACCENT_CHARACTER && (i == length ||
@@ -326,15 +328,15 @@ public class PinEntryView extends ViewGroup {
                 }
 
                 // Make sure the cursor is at the end
-                mEditText.setSelection(length);
+                editText.setSelection(length);
 
                 // Provide focus change events to any listener
-                if (mOnFocusChangeListener != null) {
-                    mOnFocusChangeListener.onFocusChange(PinEntryView.this, hasFocus);
+                if (onFocusChangeListener != null) {
+                    onFocusChangeListener.onFocusChange(PinEntryView.this, hasFocus);
                 }
             }
         });
-        mEditText.addTextChangedListener(new TextWatcher() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -348,13 +350,13 @@ public class PinEntryView extends ViewGroup {
                 int length = s.length();
                 for (int i = 0; i < digits; i++) {
                     if (s.length() > i) {
-                        String mask = mMask == null || mMask.length() == 0 ?
-                                String.valueOf(s.charAt(i)) : mMask;
+                        String mask = PinEntryView.this.mask == null || PinEntryView.this.mask.length() == 0 ?
+                                String.valueOf(s.charAt(i)) : PinEntryView.this.mask;
                         ((TextView) getChildAt(i)).setText(mask);
                     } else {
                         ((TextView) getChildAt(i)).setText("");
                     }
-                    if (mEditText.hasFocus()) {
+                    if (editText.hasFocus()) {
                         getChildAt(i).setSelected(accentType == ACCENT_ALL ||
                                 (accentType == ACCENT_CHARACTER && (i == length ||
                                         (i == digits - 1 && length == digits))));
@@ -362,7 +364,7 @@ public class PinEntryView extends ViewGroup {
                 }
             }
         });
-        addView(mEditText);
+        addView(editText);
     }
 
     /**

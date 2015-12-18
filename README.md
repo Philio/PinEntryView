@@ -11,8 +11,15 @@ AppCompat v7 support library.
 Uses a hidden `EditText` to handle input, hence behaves much in the same was as an `EditText` on the
 screen and supports similar features.
 
+## Demo
+
+The demo app running the latest release build is also available on Google Play:
+
+<a href="https://play.google.com/store/apps/details?id=me.philio.pinentry.demo&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" /></a>
+
 ## Change log
 
+* 1.0.6 - Added `pinInputType` attribute to allow changing the input type, fixed #7
 * 1.0.5 - Added `setText` and `clearText` methods, updated build to API 22
 * 1.0.4 - Changed attribute name `accentColor` to `pinAccentColor` to avoid conflicts with other
 libraries
@@ -27,7 +34,7 @@ libraries
 
 Add the following to your `build.gradle`:
 
-    compile 'me.philio:pinentryview:1.0.5'
+    compile 'me.philio:pinentryview:1.0.6'
 
 ## Styling
 
@@ -53,10 +60,13 @@ Add the following to your `build.gradle`:
   * `none` - disabled
   * `all` - highlights each separate digit view
   * `character` - highlights a single digit view to represent the position of the cursor
+* `pinInputType` - Set the input type, default number, options:
+  * `text` - full keyboard, any available character allowed
+  * `number` - numeric keyboard, only numbers allowed
 
 ## License
 
-Copyright 2014 Phil Bayfield
+Copyright 2014-2015 Phil Bayfield
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

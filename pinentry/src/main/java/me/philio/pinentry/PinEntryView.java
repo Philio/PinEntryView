@@ -333,6 +333,7 @@ public class PinEntryView extends ViewGroup {
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(digits)});
         editText.setInputType(inputType);
         editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        editText.setPadding(editText.getPaddingLeft(), editText.getPaddingTop(), editText.getPaddingRight(), 100);
         editText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

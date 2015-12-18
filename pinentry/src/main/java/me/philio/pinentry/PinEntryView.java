@@ -100,6 +100,12 @@ public class PinEntryView extends ViewGroup {
      */
     private PinEnteredListener pinEnteredListener;
 
+    /**
+     * If set to false, will always draw accent color if type is CHARACTER or ALL
+     * If set to true, will draw accent color only when focussed.
+     */
+    private boolean accentRequiresFocus;
+
     public PinEntryView(Context context) {
         this(context, null);
     }
@@ -161,6 +167,8 @@ public class PinEntryView extends ViewGroup {
         if (maskCharacter != null) {
             mask = maskCharacter;
         }
+
+        accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
 
         // Recycle the typed array
         array.recycle();
@@ -448,7 +456,7 @@ public class PinEntryView extends ViewGroup {
             super.onDraw(canvas);
 
             // If selected draw the accent
-            if (isSelected()) {
+            if (isSelected() || !accentRequiresFocus) {
                 canvas.drawRect(0, getHeight() - accentWidth, getWidth(), getHeight(), paint);
             }
         }

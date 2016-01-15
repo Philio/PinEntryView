@@ -71,6 +71,7 @@ public class PinEntryView extends ViewGroup {
     private int digitSpacing;
     private int digitTextSize;
     private int digitTextColor;
+    private int digitPlaceholderTextColor;
     private int digitElevation;
 
     /**
@@ -154,6 +155,10 @@ public class PinEntryView extends ViewGroup {
         this.accentColor = array.getColor(R.styleable.PinEntryView_pinAccentColor,
                 accentColor.resourceId > 0 ? getResources().getColor(accentColor.resourceId) :
                         accentColor.data);
+
+        // Placeholder Text color, currently defaults to material design secondary color
+        digitPlaceholderTextColor =
+                getResources().getColor(R.color.abc_secondary_text_material_light);
 
         // Mask character
         String maskCharacter = array.getString(R.styleable.PinEntryView_mask);
@@ -294,7 +299,9 @@ public class PinEntryView extends ViewGroup {
     public void setPlaceholderText(String text) {
         placeholder = text;
         for (int i = 0; i < digits; ++i) {
-            ((TextView) getChildAt(i)).setText(String.valueOf(placeholder.charAt(i)));
+            TextView view = (TextView) getChildAt(i);
+            view.setText(String.valueOf(placeholder.charAt(i)));
+            view.setTextColor(digitPlaceholderTextColor);
         }
     }
 
@@ -369,13 +376,14 @@ public class PinEntryView extends ViewGroup {
                         String mask = PinEntryView.this.mask == null || PinEntryView.this.mask.length() == 0 ?
                                 String.valueOf(s.charAt(i)) : PinEntryView.this.mask;
                         ((TextView) getChildAt(i)).setText(mask);
+                        ((TextView) getChildAt(i)).setTextColor(digitTextColor);
                     } else {
                         if (placeholder == null) {
                             ((TextView) getChildAt(i)).setText("");
-                        }
-                        else {
+                        } else {
                             ((TextView) getChildAt(i))
                                     .setText(String.valueOf(placeholder.charAt(i)));
+                            ((TextView) getChildAt(i)).setTextColor(digitPlaceholderTextColor);
                         }
                     }
                     if (editText.hasFocus()) {

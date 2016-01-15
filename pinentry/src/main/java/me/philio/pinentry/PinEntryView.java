@@ -86,6 +86,10 @@ public class PinEntryView extends ViewGroup {
     private String mask = "*";
 
     /**
+     * String to store the placeholder, if any
+     */
+    private String placeholder;
+    /**
      * Edit text to handle input
      */
     private EditText editText;
@@ -180,7 +184,7 @@ public class PinEntryView extends ViewGroup {
         int height = MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY);
 
         // Measure children
-        for (int i = 0; i < getChildCount(); i ++) {
+        for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).measure(width, height);
         }
     }
@@ -284,11 +288,13 @@ public class PinEntryView extends ViewGroup {
 
     /**
      * Set a placeholder text to digitViews
+     *
      * @param text
      */
-    public void setPlaceholderText (String text) {
-        for (int i = 0; i< digits; ++i){
-            ((TextView) getChildAt(i)).setText(String.valueOf(text.charAt(i)));
+    public void setPlaceholderText(String text) {
+        placeholder = text;
+        for (int i = 0; i < digits; ++i) {
+            ((TextView) getChildAt(i)).setText(String.valueOf(placeholder.charAt(i)));
         }
     }
 
@@ -305,7 +311,7 @@ public class PinEntryView extends ViewGroup {
     private void addViews() {
         // Add a digit view for each digit
         for (int i = 0; i < digits; i++) {
-            DigitView digitView = new DigitView(getContext() );
+            DigitView digitView = new DigitView(getContext());
             digitView.setWidth(digitWidth);
             digitView.setHeight(digitHeight);
             digitView.setBackgroundResource(digitBackground);
@@ -364,7 +370,13 @@ public class PinEntryView extends ViewGroup {
                                 String.valueOf(s.charAt(i)) : PinEntryView.this.mask;
                         ((TextView) getChildAt(i)).setText(mask);
                     } else {
-                        ((TextView) getChildAt(i)).setText("");
+                        if (placeholder == null) {
+                            ((TextView) getChildAt(i)).setText("");
+                        }
+                        else {
+                            ((TextView) getChildAt(i))
+                                    .setText(String.valueOf(placeholder.charAt(i)));
+                        }
                     }
                     if (editText.hasFocus()) {
                         getChildAt(i).setSelected(accentType == ACCENT_ALL ||

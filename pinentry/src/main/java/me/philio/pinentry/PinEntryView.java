@@ -283,6 +283,16 @@ public class PinEntryView extends ViewGroup {
     }
 
     /**
+     * Set a placeholder text to digitViews
+     * @param text
+     */
+    public void setPlaceholderText (String text) {
+        for (int i = 0; i< digits; ++i){
+            ((TextView) getChildAt(i)).setText(String.valueOf(text.charAt(i)));
+        }
+    }
+
+    /**
      * Clear pin input
      */
     public void clearText() {

@@ -98,7 +98,7 @@ public class PinEntryView extends ViewGroup {
     /**
      * Pin entered listener used as a callback for when all digits have been entered
      */
-    private PinEnteredListener pinEnteredListener;
+    private OnPinEnteredListener onPinEnteredListener;
 
     /**
      * If set to false, will always draw accent color if type is CHARACTER or ALL
@@ -168,6 +168,7 @@ public class PinEntryView extends ViewGroup {
             mask = maskCharacter;
         }
 
+        // Accent shown, default to only when focused
         accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
 
         // Recycle the typed array
@@ -193,7 +194,7 @@ public class PinEntryView extends ViewGroup {
         int height = MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY);
 
         // Measure children
-        for (int i = 0; i < getChildCount(); i ++) {
+        for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).measure(width, height);
         }
     }
@@ -275,6 +276,24 @@ public class PinEntryView extends ViewGroup {
     }
 
     /**
+     * Get current pin entered listener
+     *
+     * @return
+     */
+    public OnPinEnteredListener getOnPinEnteredListener() {
+        return onPinEnteredListener;
+    }
+
+    /**
+     * Set pin entered listener
+     *
+     * @param onPinEnteredListener
+     */
+    public void setOnPinEnteredListener(OnPinEnteredListener onPinEnteredListener) {
+        this.onPinEnteredListener = onPinEnteredListener;
+    }
+
+    /**
      * Get the {@link Editable} from the EditText
      *
      * @return
@@ -302,17 +321,13 @@ public class PinEntryView extends ViewGroup {
         editText.setText("");
     }
 
-    public void setPinEnteredListener(PinEnteredListener pinEnteredListener) {
-        this.pinEnteredListener = pinEnteredListener;
-    }
-
     /**
      * Create views and add them to the view group
      */
     private void addViews() {
         // Add a digit view for each digit
         for (int i = 0; i < digits; i++) {
-            DigitView digitView = new DigitView(getContext() );
+            DigitView digitView = new DigitView(getContext());
             digitView.setWidth(digitWidth);
             digitView.setHeight(digitHeight);
             digitView.setBackgroundResource(digitBackground);
@@ -380,8 +395,8 @@ public class PinEntryView extends ViewGroup {
                     }
                 }
 
-                if(length == digits && pinEnteredListener != null) {
-                    pinEnteredListener.pinEntered(s.toString());
+                if (length == digits && onPinEnteredListener != null) {
+                    onPinEnteredListener.onPinEntered(s.toString());
                 }
             }
         });
@@ -463,8 +478,8 @@ public class PinEntryView extends ViewGroup {
 
     }
 
-    public interface PinEnteredListener {
-        void pinEntered(String pin);
+    public interface OnPinEnteredListener {
+        void onPinEntered(String pin);
     }
 
 }

@@ -15,10 +15,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pinEntryView = (PinEntryView) findViewById(R.id.pin_entry_simple);
-        pinEntryView.setPinEnteredListener(new PinEntryView.PinEnteredListener() {
+        pinEntryView.setOnPinEnteredListener(new PinEntryView.OnPinEnteredListener() {
             @Override
-            public void pinEntered(String pin) {
-                Toast.makeText(MainActivity.this, "Pin entered " + pin, Toast.LENGTH_LONG).show();
+            public void onPinEntered(String pin) {
+                Toast.makeText(MainActivity.this, "Pin entered: " + pin, Toast.LENGTH_LONG).show();
             }
         });
     }

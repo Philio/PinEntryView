@@ -95,6 +95,17 @@ public class PinEntryView extends ViewGroup {
      */
     private OnFocusChangeListener onFocusChangeListener;
 
+    /**
+     * Pin entered listener used as a callback for when all digits have been entered
+     */
+    private OnPinEnteredListener onPinEnteredListener;
+
+    /**
+     * If set to false, will always draw accent color if type is CHARACTER or ALL
+     * If set to true, will draw accent color only when focussed.
+     */
+    private boolean accentRequiresFocus;
+
     public PinEntryView(Context context) {
         this(context, null);
     }
@@ -157,6 +168,9 @@ public class PinEntryView extends ViewGroup {
             mask = maskCharacter;
         }
 
+        // Accent shown, default to only when focused
+        accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
+
         // Recycle the typed array
         array.recycle();
 
@@ -180,7 +194,7 @@ public class PinEntryView extends ViewGroup {
         int height = MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY);
 
         // Measure children
-        for (int i = 0; i < getChildCount(); i ++) {
+        for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).measure(width, height);
         }
     }
@@ -262,6 +276,24 @@ public class PinEntryView extends ViewGroup {
     }
 
     /**
+     * Get current pin entered listener
+     *
+     * @return
+     */
+    public OnPinEnteredListener getOnPinEnteredListener() {
+        return onPinEnteredListener;
+    }
+
+    /**
+     * Set pin entered listener
+     *
+     * @param onPinEnteredListener
+     */
+    public void setOnPinEnteredListener(OnPinEnteredListener onPinEnteredListener) {
+        this.onPinEnteredListener = onPinEnteredListener;
+    }
+
+    /**
      * Get the {@link Editable} from the EditText
      *
      * @return
@@ -295,7 +327,7 @@ public class PinEntryView extends ViewGroup {
     private void addViews() {
         // Add a digit view for each digit
         for (int i = 0; i < digits; i++) {
-            DigitView digitView = new DigitView(getContext() );
+            DigitView digitView = new DigitView(getContext());
             digitView.setWidth(digitWidth);
             digitView.setHeight(digitHeight);
             digitView.setBackgroundResource(digitBackground);
@@ -361,6 +393,10 @@ public class PinEntryView extends ViewGroup {
                                 (accentType == ACCENT_CHARACTER && (i == length ||
                                         (i == digits - 1 && length == digits))));
                     }
+                }
+
+                if (length == digits && onPinEnteredListener != null) {
+                    onPinEnteredListener.onPinEntered(s.toString());
                 }
             }
         });
@@ -435,11 +471,15 @@ public class PinEntryView extends ViewGroup {
             super.onDraw(canvas);
 
             // If selected draw the accent
-            if (isSelected()) {
+            if (isSelected() || !accentRequiresFocus) {
                 canvas.drawRect(0, getHeight() - accentWidth, getWidth(), getHeight(), paint);
             }
         }
 
+    }
+
+    public interface OnPinEnteredListener {
+        void onPinEntered(String pin);
     }
 
 }

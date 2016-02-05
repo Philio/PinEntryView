@@ -95,6 +95,17 @@ public class PinEntryView extends ViewGroup {
      */
     private OnFocusChangeListener onFocusChangeListener;
 
+    /**
+     * Pin entered listener used as a callback for when all digits have been entered
+     */
+    private PinEnteredListener pinEnteredListener;
+
+    /**
+     * If set to false, will always draw accent color if type is CHARACTER or ALL
+     * If set to true, will draw accent color only when focussed.
+     */
+    private boolean accentRequiresFocus;
+
     public PinEntryView(Context context) {
         this(context, null);
     }
@@ -156,6 +167,8 @@ public class PinEntryView extends ViewGroup {
         if (maskCharacter != null) {
             mask = maskCharacter;
         }
+
+        accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
 
         // Recycle the typed array
         array.recycle();
@@ -289,6 +302,10 @@ public class PinEntryView extends ViewGroup {
         editText.setText("");
     }
 
+    public void setPinEnteredListener(PinEnteredListener pinEnteredListener) {
+        this.pinEnteredListener = pinEnteredListener;
+    }
+
     /**
      * Create views and add them to the view group
      */
@@ -361,6 +378,10 @@ public class PinEntryView extends ViewGroup {
                                 (accentType == ACCENT_CHARACTER && (i == length ||
                                         (i == digits - 1 && length == digits))));
                     }
+                }
+
+                if(length == digits && pinEnteredListener != null) {
+                    pinEnteredListener.pinEntered(s.toString());
                 }
             }
         });
@@ -435,11 +456,15 @@ public class PinEntryView extends ViewGroup {
             super.onDraw(canvas);
 
             // If selected draw the accent
-            if (isSelected()) {
+            if (isSelected() || !accentRequiresFocus) {
                 canvas.drawRect(0, getHeight() - accentWidth, getWidth(), getHeight(), paint);
             }
         }
 
+    }
+
+    public interface PinEnteredListener {
+        void pinEntered(String pin);
     }
 
 }

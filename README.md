@@ -60,6 +60,7 @@ Add the following to your `build.gradle`:
   * `none` - disabled
   * `all` - highlights each separate digit view
   * `character` - highlights a single digit view to represent the position of the cursor
+* `accentRequiresFocus` - show accent only when focused, default true
 * `pinInputType` - Set the input type, default number, options:
   * `text` - full keyboard, any available character allowed
   * `number` - numeric keyboard, only numbers allowed

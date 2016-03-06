@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">PinEntryView Demo</string>
+    <string name="disable_pinentry">Disable PinEntryView interaction</string>
 
 </resources>

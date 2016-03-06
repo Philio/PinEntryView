@@ -179,6 +179,24 @@ public class PinEntryView extends ViewGroup {
     }
 
     @Override
+    public void setFocusableInTouchMode(boolean focusableInTouchMode) {
+        super.setFocusableInTouchMode(focusableInTouchMode);
+        editText.setFocusableInTouchMode(focusableInTouchMode);
+    }
+
+    @Override
+    public void setFocusable(boolean focusable) {
+        super.setFocusable(focusable);
+        editText.setFocusable(focusable);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        editText.setEnabled(enabled);
+    }
+
+    @Override
     public boolean shouldDelayChildPressedState() {
         return false;
     }
@@ -408,8 +426,8 @@ public class PinEntryView extends ViewGroup {
      */
     static class SavedState extends BaseSavedState {
 
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR =
+                new Creator<SavedState>() {
                     @Override
                     public SavedState createFromParcel(Parcel in) {
                         return new SavedState(in);

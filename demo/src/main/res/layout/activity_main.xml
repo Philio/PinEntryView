@@ -24,6 +24,12 @@
             app:digitBackground="@android:color/white"
             app:digitElevation="10dp" />
 
+        <CheckBox
+            android:id="@+id/disableCheck"
+            android:text="@string/disable_pinentry"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+
         <me.philio.pinentry.PinEntryView
             android:id="@+id/pin_entry_border"
             android:layout_width="wrap_content"

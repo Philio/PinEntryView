@@ -10,6 +10,8 @@
         <attr name="digitSpacing" format="dimension" />
         <!-- Digit background, colour or drawable -->
         <attr name="digitBackground" format="reference|color" />
+        <!-- Digit background, colour or drawable -->
+        <attr name="digitEnterValueBackground" format="reference|color" />
         <!-- Font size to use for the mask text, default 15sp -->
         <attr name="digitTextSize" format="dimension" />
         <!-- Colour of the mask text, defaults to theme textColorPrimary -->

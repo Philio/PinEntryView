@@ -13,6 +13,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/colorPrimary"
         tools:context=".MainActivity">
 
         <me.philio.pinentry.PinEntryView
@@ -42,6 +43,17 @@
             android:layout_marginTop="20dp"
             app:accentType="all"
             app:digitBackground="@color/red"
+            app:digitTextColor="@android:color/white"
+            app:pinAccentColor="@color/amber" />
+
+        <me.philio.pinentry.PinEntryView
+            android:id="@+id/pin_entry_colors_drawable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:accentType="all"
+            app:digitBackground="@drawable/password_blue_background"
+            app:digitEnterValueBackground="@drawable/password_blue_background_filled"
             app:digitTextColor="@android:color/white"
             app:pinAccentColor="@color/amber" />
     </LinearLayout>

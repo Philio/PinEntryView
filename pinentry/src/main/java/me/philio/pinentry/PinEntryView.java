@@ -68,6 +68,7 @@ public class PinEntryView extends ViewGroup {
     private int digitWidth;
     private int digitHeight;
     private int digitBackground;
+    private int digitEnterValueBackground = 0;
     private int digitSpacing;
     private int digitTextSize;
     private int digitTextColor;
@@ -147,6 +148,17 @@ public class PinEntryView extends ViewGroup {
         theme.resolveAttribute(android.R.attr.windowBackground, background, true);
         digitBackground = array.getResourceId(R.styleable.PinEntryView_digitBackground,
                 background.resourceId);
+
+        if (R.styleable.PinEntryView_digitEnterValueBackground != 0) {
+            // Get theme to resolve defaults
+            Resources.Theme themeEnterValue = getContext().getTheme();
+
+            // Background colour, default to android:windowBackground from theme
+            TypedValue backgroundEnterValue = new TypedValue();
+            themeEnterValue.resolveAttribute(digitBackground, backgroundEnterValue, true);
+            digitEnterValueBackground = array.getResourceId(R.styleable.PinEntryView_digitEnterValueBackground,
+                    backgroundEnterValue.resourceId);
+        }
 
         // Text colour, default to android:textColorPrimary from theme
         TypedValue textColor = new TypedValue();
@@ -381,12 +393,21 @@ public class PinEntryView extends ViewGroup {
             public void afterTextChanged(Editable s) {
                 int length = s.length();
                 for (int i = 0; i < digits; i++) {
-                    if (s.length() > i) {
-                        String mask = PinEntryView.this.mask == null || PinEntryView.this.mask.length() == 0 ?
-                                String.valueOf(s.charAt(i)) : PinEntryView.this.mask;
-                        ((TextView) getChildAt(i)).setText(mask);
-                    } else {
-                        ((TextView) getChildAt(i)).setText("");
+
+                    if (digitEnterValueBackground != 0){
+                        if (s.length() > i) {
+                            getChildAt(i).setBackgroundResource(digitEnterValueBackground);
+                        } else {
+                            getChildAt(i).setBackgroundResource(digitBackground);
+                        }
+                    }else{
+                        if (s.length() > i) {
+                            String mask = PinEntryView.this.mask == null || PinEntryView.this.mask.length() == 0 ?
+                                    String.valueOf(s.charAt(i)) : PinEntryView.this.mask;
+                            ((TextView) getChildAt(i)).setText(mask);
+                        } else {
+                            ((TextView) getChildAt(i)).setText("");
+                        }
                     }
                     if (editText.hasFocus()) {
                         getChildAt(i).setSelected(accentType == ACCENT_ALL ||

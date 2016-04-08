@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -86,9 +87,6 @@ public class PinEntryView extends ViewGroup {
      */
     private String mask = "*";
 
-    /**
-     * Edit text to handle input
-     */
     private EditText editText;
 
     /**
@@ -241,6 +239,11 @@ public class PinEntryView extends ViewGroup {
             return true;
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+        return editText.requestFocus(direction, previouslyFocusedRect);
     }
 
     @Override
@@ -422,6 +425,13 @@ public class PinEntryView extends ViewGroup {
             }
         });
         addView(editText);
+    }
+
+    /**
+     * Edit text to handle input
+     */
+    public EditText getEditText() {
+        return editText;
     }
 
     /**

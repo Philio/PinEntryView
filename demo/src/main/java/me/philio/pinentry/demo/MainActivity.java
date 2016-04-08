@@ -21,6 +21,11 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(MainActivity.this, "Pin entered: " + pin, Toast.LENGTH_LONG).show();
             }
         });
+        /*EditText yourEditText= ((PinEntryView) findViewById(R.id.pin_entry_colors_drawable)).getEditText();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT);
+        ((PinEntryView) findViewById(R.id.pin_entry_colors_drawable)).getEditText().requestFocus();*/
+        findViewById(R.id.pin_entry_colors_drawable).requestFocus();
     }
 
 }

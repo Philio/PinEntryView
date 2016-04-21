@@ -106,6 +106,11 @@ public class PinEntryView extends ViewGroup {
      */
     private boolean accentRequiresFocus;
 
+    /**
+     * If no mask is set, all alphabet characters will be shown upercase
+     */
+    private boolean textUpperCase;
+
     public PinEntryView(Context context) {
         this(context, null);
     }
@@ -170,6 +175,9 @@ public class PinEntryView extends ViewGroup {
 
         // Accent shown, default to only when focused
         accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
+
+        // All caps default false
+        textUpperCase = array.getBoolean(R.styleable.PinEntryView_textUpperCase, false);
 
         // Recycle the typed array
         array.recycle();
@@ -383,7 +391,8 @@ public class PinEntryView extends ViewGroup {
                 for (int i = 0; i < digits; i++) {
                     if (s.length() > i) {
                         String mask = PinEntryView.this.mask == null || PinEntryView.this.mask.length() == 0 ?
-                                String.valueOf(s.charAt(i)) : PinEntryView.this.mask;
+                                (PinEntryView.this.textUpperCase ? String.valueOf(s.charAt(i)).toUpperCase() : String.valueOf(s.charAt(i)))
+                                : PinEntryView.this.mask;
                         ((TextView) getChildAt(i)).setText(mask);
                     } else {
                         ((TextView) getChildAt(i)).setText("");
@@ -401,6 +410,10 @@ public class PinEntryView extends ViewGroup {
             }
         });
         addView(editText);
+    }
+
+    public interface OnPinEnteredListener {
+        void onPinEntered(String pin);
     }
 
     /**
@@ -476,10 +489,6 @@ public class PinEntryView extends ViewGroup {
             }
         }
 
-    }
-
-    public interface OnPinEnteredListener {
-        void onPinEntered(String pin);
     }
 
 }

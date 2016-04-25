@@ -380,7 +380,7 @@ public class PinEntryView extends ViewGroup {
             digitView.setHeight(digitHeight);
             digitView.setBackgroundResource(digitBackground);
             digitView.setTextColor(digitTextColor);
-            digitView.setTextSize(digitTextSize);
+            digitView.setTextSize(TypedValue.COMPLEX_UNIT_PX, digitTextSize);
             digitView.setGravity(Gravity.CENTER);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 digitView.setElevation(digitElevation);

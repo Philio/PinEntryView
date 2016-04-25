@@ -35,6 +35,10 @@ libraries
 Add the following to your `build.gradle`:
 
     compile 'me.philio:pinentryview:1.0.6'
+    
+Or for latest snapshot:
+
+    compile 'me.philio:pinentryview:1.1.0-SNAPSHOT'
 
 ## Styling
 

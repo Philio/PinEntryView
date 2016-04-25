@@ -35,5 +35,7 @@
         </attr>
         <!-- Only draw accent when View has focus -->
         <attr name="accentRequiresFocus" format="boolean" />
+        <!-- All uppercase when no mask set -->
+        <attr name="textUpperCase" format="boolean" />
     </declare-styleable>
 </resources>

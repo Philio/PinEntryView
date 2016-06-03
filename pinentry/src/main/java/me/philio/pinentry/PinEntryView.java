@@ -23,6 +23,8 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.text.TextUtilsCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -38,6 +40,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 /**
  * A PIN entry view widget for Android based on the Android 5 Material Theme via the AppCompat v7
@@ -199,14 +203,19 @@ public class PinEntryView extends ViewGroup {
 
     @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
         // Position the text views
+        final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
         for (int i = 0; i < digits; i++) {
             View child = getChildAt(i);
-            int left = i * digitWidth + (i > 0 ? i * digitSpacing : 0);
-            child.layout(
-                    left + getPaddingLeft() + digitElevation,
-                    getPaddingTop() + (digitElevation / 2),
-                    left + getPaddingLeft() + digitElevation + digitWidth,
-                    getPaddingTop() + (digitElevation / 2) + digitHeight);
+            int left;
+            if (!isLayoutRtl) {
+                left = i * digitWidth + (i > 0 ? i * digitSpacing : 0);
+            } else {
+                int j = digits - 1 - i;
+                left = j * digitWidth + (j > 0 ? j * digitSpacing : 0);
+            }
+            int childLeft = left + getPaddingLeft() + digitElevation;
+            int childTop = getPaddingTop() + (digitElevation / 2);
+            child.layout(childLeft, childTop, childLeft + digitWidth, childTop + digitHeight);
         }
 
         // Add the edit text as a 1px wide view to allow it to focus

@@ -304,6 +304,7 @@ public class PinEntryView extends ViewGroup {
             text = text.subSequence(0, digits);
         }
         editText.setText(text);
+        editText.setSelection(text.length());
     }
 
     /**

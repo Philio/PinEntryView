@@ -23,6 +23,7 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -151,16 +152,20 @@ public class PinEntryView extends ViewGroup {
         // Text colour, default to android:textColorPrimary from theme
         TypedValue textColor = new TypedValue();
         theme.resolveAttribute(android.R.attr.textColorPrimary, textColor, true);
-        digitTextColor = array.getColor(R.styleable.PinEntryView_digitTextColor,
-                textColor.resourceId > 0 ? getResources().getColor(textColor.resourceId) :
-                        textColor.data);
+        digitTextColor = array.getColor(R.styleable.PinEntryView_digitTextColor, -1);
+
+        if (!isInEditMode() && digitTextColor == -1) {
+            digitTextColor = ContextCompat.getColor(context, textColor.resourceId);
+        }
 
         // Accent colour, default to android:colorAccent from theme
         TypedValue accentColor = new TypedValue();
         theme.resolveAttribute(R.attr.colorAccent, accentColor, true);
-        this.accentColor = array.getColor(R.styleable.PinEntryView_pinAccentColor,
-                accentColor.resourceId > 0 ? getResources().getColor(accentColor.resourceId) :
-                        accentColor.data);
+        this.accentColor = array.getColor(R.styleable.PinEntryView_pinAccentColor, -1);
+
+        if (!isInEditMode() && this.accentColor == -1) {
+            this.accentColor = ContextCompat.getColor(context, textColor.resourceId);
+        }
 
         // Mask character
         String maskCharacter = array.getString(R.styleable.PinEntryView_mask);

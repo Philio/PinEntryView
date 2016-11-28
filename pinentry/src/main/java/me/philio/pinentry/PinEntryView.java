@@ -368,6 +368,15 @@ public class PinEntryView extends ViewGroup {
     public boolean getAccentRequiresFocus() {
         return accentRequiresFocus;
     }
+	
+	/**
+	 * Set the mask character
+	*/
+	public void setMask(String maskCharacter) {
+		if (maskCharacter != null) {
+	    	mMask = maskCharacter;
+	    }
+	}
 
     /**
      * Create views and add them to the view group

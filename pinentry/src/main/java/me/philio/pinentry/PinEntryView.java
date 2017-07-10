@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -56,6 +57,7 @@ public class PinEntryView extends ViewGroup {
      * Number of digits
      */
     private int digits;
+    private int digitsRequired;
 
     /**
      * Input type
@@ -72,6 +74,7 @@ public class PinEntryView extends ViewGroup {
     private int digitTextSize;
     private int digitTextColor;
     private int digitElevation;
+    private float digitOptionalAlpha;
 
     /**
      * Accent dimensions and styles
@@ -120,6 +123,8 @@ public class PinEntryView extends ViewGroup {
         // Get style information
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.PinEntryView);
         digits = array.getInt(R.styleable.PinEntryView_numDigits, 4);
+        digitsRequired = array.getInt(R.styleable.PinEntryView_numDigitsRequired, digits);
+        digitOptionalAlpha = array.getFloat(R.styleable.PinEntryView_digitOptionalAlpha, 0.33f);
         inputType = array.getInt(R.styleable.PinEntryView_pinInputType, InputType.TYPE_CLASS_NUMBER);
         accentType = array.getInt(R.styleable.PinEntryView_accentType, ACCENT_NONE);
 
@@ -178,11 +183,13 @@ public class PinEntryView extends ViewGroup {
         addViews();
     }
 
-    @Override public boolean shouldDelayChildPressedState() {
+    @Override
+    public boolean shouldDelayChildPressedState() {
         return false;
     }
 
-    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Calculate the size of the view
         int width = (digitWidth * digits) + (digitSpacing * (digits - 1));
         setMeasuredDimension(
@@ -197,7 +204,8 @@ public class PinEntryView extends ViewGroup {
         }
     }
 
-    @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
         // Position the text views
         for (int i = 0; i < digits; i++) {
             View child = getChildAt(i);
@@ -213,7 +221,8 @@ public class PinEntryView extends ViewGroup {
         getChildAt(digits).layout(0, 0, 1, getMeasuredHeight());
     }
 
-    @Override public boolean onTouchEvent(MotionEvent event) {
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             // Make sure this view is focused
             editText.requestFocus();
@@ -227,25 +236,29 @@ public class PinEntryView extends ViewGroup {
         return super.onTouchEvent(event);
     }
 
-    @Override protected Parcelable onSaveInstanceState() {
+    @Override
+    protected Parcelable onSaveInstanceState() {
         Parcelable parcelable = super.onSaveInstanceState();
         SavedState savedState = new SavedState(parcelable);
         savedState.editTextValue = editText.getText().toString();
         return savedState;
     }
 
-    @Override protected void onRestoreInstanceState(Parcelable state) {
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
         SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
         editText.setText(savedState.editTextValue);
         editText.setSelection(savedState.editTextValue.length());
     }
 
-    @Override public OnFocusChangeListener getOnFocusChangeListener() {
+    @Override
+    public OnFocusChangeListener getOnFocusChangeListener() {
         return onFocusChangeListener;
     }
 
-    @Override public void setOnFocusChangeListener(OnFocusChangeListener l) {
+    @Override
+    public void setOnFocusChangeListener(OnFocusChangeListener l) {
         onFocusChangeListener = l;
     }
 
@@ -382,6 +395,10 @@ public class PinEntryView extends ViewGroup {
             digitView.setTextColor(digitTextColor);
             digitView.setTextSize(TypedValue.COMPLEX_UNIT_PX, digitTextSize);
             digitView.setGravity(Gravity.CENTER);
+            digitView.setDigitIndex(i);
+            if (i >= digitsRequired) {
+                digitView.setAlphaBackwardsCompatible(digitOptionalAlpha);
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 digitView.setElevation(digitElevation);
             }
@@ -397,7 +414,8 @@ public class PinEntryView extends ViewGroup {
         editText.setInputType(inputType);
         editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override public void onFocusChange(View v, boolean hasFocus) {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
                 // Update the selected state of the views
                 int length = editText.getText().length();
                 for (int i = 0; i < digits; i++) {
@@ -416,13 +434,16 @@ public class PinEntryView extends ViewGroup {
             }
         });
         editText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
-            @Override public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
                 int length = s.length();
                 for (int i = 0; i < digits; i++) {
                     if (s.length() > i) {
@@ -439,7 +460,7 @@ public class PinEntryView extends ViewGroup {
                     }
                 }
 
-                if (length == digits && onPinEnteredListener != null) {
+                if (length >= digitsRequired && onPinEnteredListener != null) {
                     onPinEnteredListener.onPinEntered(s.toString());
                 }
             }
@@ -454,11 +475,13 @@ public class PinEntryView extends ViewGroup {
 
         public static final Parcelable.Creator<SavedState> CREATOR =
                 new Parcelable.Creator<SavedState>() {
-                    @Override public SavedState createFromParcel(Parcel in) {
+                    @Override
+                    public SavedState createFromParcel(Parcel in) {
                         return new SavedState(in);
                     }
 
-                    @Override public SavedState[] newArray(int size) {
+                    @Override
+                    public SavedState[] newArray(int size) {
                         return new SavedState[size];
                     }
                 };
@@ -473,7 +496,8 @@ public class PinEntryView extends ViewGroup {
             editTextValue = source.readString();
         }
 
-        @Override public void writeToParcel(Parcel dest, int flags) {
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeString(editTextValue);
         }
@@ -489,6 +513,7 @@ public class PinEntryView extends ViewGroup {
          * Paint used to draw accent
          */
         private Paint paint;
+        private int digitIndex;
 
         public DigitView(Context context) {
             this(context, null);
@@ -507,13 +532,47 @@ public class PinEntryView extends ViewGroup {
             paint.setColor(accentColor);
         }
 
-        @Override protected void onDraw(Canvas canvas) {
+        public void setDigitIndex(int digitIndex) {
+            this.digitIndex = digitIndex;
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
             // If selected draw the accent
             if (isSelected() || !accentRequiresFocus) {
                 canvas.drawRect(0, getHeight() - accentWidth, getWidth(), getHeight(), paint);
             }
+
+            // If the digit is optional make it semi-transparent
+            if (isOptional() && isTextEmpty()){
+                //If accent type is character make the selected digit non-transparent
+                if (accentType == ACCENT_CHARACTER && isSelected()){
+                    this.setAlphaBackwardsCompatible(1f);
+                } else {
+                    this.setAlphaBackwardsCompatible(digitOptionalAlpha);
+                }
+            } else {
+                this.setAlphaBackwardsCompatible(1f);
+            }
+        }
+
+        public void setAlphaBackwardsCompatible(float alpha) {
+            if (Build.VERSION.SDK_INT > 10) {
+                this.setAlpha(alpha);
+            } else {
+                Drawable background = this.getBackground();
+                background.setAlpha((int) (255 * alpha));
+            }
+        }
+
+        private boolean isOptional(){
+            return digitIndex >= digitsRequired;
+        }
+
+        private boolean isTextEmpty(){
+            return getText().length() == 0;
         }
 
     }

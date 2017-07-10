@@ -18,7 +18,7 @@ public class MainActivity extends ActionBarActivity {
         pinEntryView.setOnPinEnteredListener(new PinEntryView.OnPinEnteredListener() {
             @Override
             public void onPinEntered(String pin) {
-                Toast.makeText(MainActivity.this, "Pin entered: " + pin, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Pin entered: " + pin, Toast.LENGTH_SHORT).show();
             }
         });
     }

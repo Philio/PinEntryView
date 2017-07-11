@@ -38,13 +38,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
  * A PIN entry view widget for Android based on the Android 5 Material Theme via the AppCompat v7
  * support library.
  */
-public class PinEntryView extends ViewGroup {
+public class PinEntryView extends LinearLayout {
 
     /**
      * Accent types

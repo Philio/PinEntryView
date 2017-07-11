@@ -191,6 +191,7 @@ public class PinEntryView extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
         // Calculate the size of the view
         int width = (digitWidth * digits) + (digitSpacing * (digits - 1));
         setMeasuredDimension(
@@ -388,6 +389,11 @@ public class PinEntryView extends LinearLayout {
      */
     private void addViews() {
         // Add a digit view for each digit
+        int deviceWidth = getContext().getResources().getDisplayMetrics().widthPixels;
+        float scaleFactor = getContext().getResources().getDisplayMetrics().density;
+        digitWidth = (int) ((deviceWidth-(digitSpacing*(digits-1))-(2*15*scaleFactor))/digits);
+        digitHeight = digitWidth;
+
         for (int i = 0; i < digits; i++) {
             DigitView digitView = new DigitView(getContext());
             digitView.setWidth(digitWidth);

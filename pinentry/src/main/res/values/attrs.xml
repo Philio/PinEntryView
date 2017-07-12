@@ -35,5 +35,9 @@
         </attr>
         <!-- Only draw accent when View has focus -->
         <attr name="accentRequiresFocus" format="boolean" />
+        <!-- The number of digits required at minimum (eg 4 out of 6 digits), default 'numDigits' -->
+        <attr name="numDigitsRequired" format="integer" />
+        <!-- The alpha value of the optional digits -->
+        <attr name="digitOptionalAlpha" format="float" />
     </declare-styleable>
 </resources>

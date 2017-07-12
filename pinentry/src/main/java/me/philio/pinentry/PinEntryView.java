@@ -467,6 +467,7 @@ public class PinEntryView extends LinearLayout {
                     }
                 }
 
+                onPinEnteredListener.onPinChanged(s.toString());
                 if (length >= digitsRequired && onPinEnteredListener != null) {
                     onPinEnteredListener.onPinEntered(s.toString());
                 }
@@ -586,6 +587,7 @@ public class PinEntryView extends LinearLayout {
 
     public interface OnPinEnteredListener {
         void onPinEntered(String pin);
+        void onPinChanged(String pin);
     }
 
 }

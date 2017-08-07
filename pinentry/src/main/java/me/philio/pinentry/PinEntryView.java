@@ -317,6 +317,9 @@ public class PinEntryView extends ViewGroup {
         return digits;
     }
 
+    public void setDigits(int digits) {
+        this.digits = digits;
+    }
     public int getInputType() {
         return inputType;
     }

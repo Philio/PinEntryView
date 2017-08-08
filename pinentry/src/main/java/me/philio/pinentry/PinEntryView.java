@@ -55,7 +55,7 @@ public class PinEntryView extends ViewGroup {
     /**
      * Number of digits
      */
-    private int digits;
+    private int digits = 4;
 
     /**
      * Input type
@@ -119,7 +119,7 @@ public class PinEntryView extends ViewGroup {
 
         // Get style information
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.PinEntryView);
-        digits = array.getInt(R.styleable.PinEntryView_numDigits, 4);
+        digits = array.getInt(R.styleable.PinEntryView_numDigits, digits);
         inputType = array.getInt(R.styleable.PinEntryView_pinInputType, InputType.TYPE_CLASS_NUMBER);
         accentType = array.getInt(R.styleable.PinEntryView_accentType, ACCENT_NONE);
 
@@ -319,6 +319,8 @@ public class PinEntryView extends ViewGroup {
 
     public void setDigits(int digits) {
         this.digits = digits;
+        this.removeAllViews();
+        addViews();
     }
     public int getInputType() {
         return inputType;

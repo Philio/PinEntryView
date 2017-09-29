@@ -35,5 +35,7 @@
         </attr>
         <!-- Only draw accent when View has focus -->
         <attr name="accentRequiresFocus" format="boolean" />
+        <!-- On touch of DigitView should we request focus on the hidden EditText? -->
+        <attr name="softKeyboardAllowed" format="boolean" />
     </declare-styleable>
 </resources>

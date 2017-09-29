@@ -106,6 +106,12 @@ public class PinEntryView extends ViewGroup {
      */
     private boolean accentRequiresFocus;
 
+    /**
+     * If set to false, on touch of the DigitView soft keyboard will not be shown
+     * If set to true, default behaviour
+     */
+    private boolean softKeyboardAllowed = true;
+
     public PinEntryView(Context context) {
         this(context, null);
     }
@@ -171,6 +177,8 @@ public class PinEntryView extends ViewGroup {
         // Accent shown, default to only when focused
         accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
 
+        softKeyboardAllowed = array.getBoolean(R.styleable.PinEntryView_softKeyboardAllowed, true);
+
         // Recycle the typed array
         array.recycle();
 
@@ -214,7 +222,7 @@ public class PinEntryView extends ViewGroup {
     }
 
     @Override public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN && isSoftKeyboardAllowed()) {
             // Make sure this view is focused
             editText.requestFocus();
 
@@ -367,6 +375,10 @@ public class PinEntryView extends ViewGroup {
 
     public boolean getAccentRequiresFocus() {
         return accentRequiresFocus;
+    }
+
+    public boolean isSoftKeyboardAllowed() {
+        return softKeyboardAllowed;
     }
 
     /**

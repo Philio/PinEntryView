@@ -177,6 +177,8 @@ public class PinEntryView extends ViewGroup {
         // Accent shown, default to only when focused
         accentRequiresFocus = array.getBoolean(R.styleable.PinEntryView_accentRequiresFocus, true);
 
+        softKeyboardAllowed = array.getBoolean(R.styleable.PinEntryView_softKeyboardAllowed, true);
+
         // Recycle the typed array
         array.recycle();
 

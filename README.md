@@ -68,6 +68,7 @@ Or for latest snapshot:
 * `pinInputType` - Set the input type, default number, options:
   * `text` - full keyboard, any available character allowed
   * `number` - numeric keyboard, only numbers allowed
+* `softKeyboardAllowed` - show soft keyboard on touch? default true
 
 ## License
 

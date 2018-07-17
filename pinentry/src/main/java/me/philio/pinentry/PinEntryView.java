@@ -522,7 +522,7 @@ public class PinEntryView extends ViewGroup {
         void onPinEntered(String pin);
     }
 
-    public EditText getEditText() {
-        return editText;
+    public void setImeOptions(int imeOptions) {
+        editText.setImeOptions(imeOptions);
     }
 }
